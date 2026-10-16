@@ -2,12 +2,14 @@ import SwiftUI
 
 struct OverlayView: View {
     let model: AppModel
+    var hints = true
 
     var body: some View {
         Canvas { ctx, size in
             let a = model.analysis
             switch model.mode {
             case .pointCloud:
+                guard hints else { break }
                 pill(&ctx, "drag: rotate · pinch: zoom · tap: reset", at: CGPoint(x: 10, y: size.height - 8), color: .black)
             case .stereoPair, .anaglyph:
                 break

@@ -12,6 +12,7 @@
 		303596F04684BEEC1FD9B97E /* OverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DA425104A6DE48AF50AE289 /* OverlayView.swift */; };
 		3C6B87A0F806359E573EF930 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF78EAB8BCDBF65A25A5D815 /* ContentView.swift */; };
 		4A938EB4B82503C00D57E3D0 /* AppModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56DA7BD05E72209317257A2 /* AppModel.swift */; };
+		6D6FF7A50EAA907EE3B1FD83 /* Capture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1921C3786C3FB672A67C7E9B /* Capture.swift */; };
 		7021D3F748CDFD42D14E7E53 /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 6E909856B28ECAC981F8F9C1 /* Shaders.metal */; };
 		A49497550BC6E9443FB9B8E1 /* Detector.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9BBCF19E1F51DA8A81E2D8E /* Detector.swift */; };
 		C00FAEBD9221E735877A6B2B /* Analyzer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3184CAD436EB2D31EDFD80E /* Analyzer.swift */; };
@@ -20,6 +21,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1921C3786C3FB672A67C7E9B /* Capture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Capture.swift; sourceTree = "<group>"; };
 		2DA425104A6DE48AF50AE289 /* OverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverlayView.swift; sourceTree = "<group>"; };
 		6E909856B28ECAC981F8F9C1 /* Shaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
 		9FBEB6373DDF5AFD89798702 /* StereoEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StereoEngine.swift; sourceTree = "<group>"; };
@@ -42,6 +44,7 @@
 				E56DA7BD05E72209317257A2 /* AppModel.swift */,
 				DD47C900CDA69F349F2E7F05 /* Assets.xcassets */,
 				F3911430056B77D868328295 /* CameraController.swift */,
+				1921C3786C3FB672A67C7E9B /* Capture.swift */,
 				AF78EAB8BCDBF65A25A5D815 /* ContentView.swift */,
 				A9BBCF19E1F51DA8A81E2D8E /* Detector.swift */,
 				2DA425104A6DE48AF50AE289 /* OverlayView.swift */,
@@ -174,6 +177,7 @@
 				C00FAEBD9221E735877A6B2B /* Analyzer.swift in Sources */,
 				4A938EB4B82503C00D57E3D0 /* AppModel.swift in Sources */,
 				CD63C1D3316EB9A56D11FB12 /* CameraController.swift in Sources */,
+				6D6FF7A50EAA907EE3B1FD83 /* Capture.swift in Sources */,
 				3C6B87A0F806359E573EF930 /* ContentView.swift in Sources */,
 				A49497550BC6E9443FB9B8E1 /* Detector.swift in Sources */,
 				303596F04684BEEC1FD9B97E /* OverlayView.swift in Sources */,
@@ -253,8 +257,11 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = StereoVision;
+				INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace = YES;
 				INFOPLIST_KEY_NSCameraUsageDescription = "StereoVision uses the wide and ultra-wide cameras to compute stereo depth.";
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "StereoVision saves photos and videos of the stereo view to your library.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIFileSharingEnabled = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UIStatusBarHidden = YES;
@@ -282,8 +289,11 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = StereoVision;
+				INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace = YES;
 				INFOPLIST_KEY_NSCameraUsageDescription = "StereoVision uses the wide and ultra-wide cameras to compute stereo depth.";
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "StereoVision saves photos and videos of the stereo view to your library.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIFileSharingEnabled = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UIStatusBarHidden = YES;

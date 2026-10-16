@@ -39,6 +39,15 @@ final class StereoFrame: @unchecked Sendable {
         buffer.contents().assumingMemoryBound(to: Float.self)[y * rowStride + x]
     }
 
+    func depthCopy() -> [Float] {
+        var out = [Float](repeating: 0, count: width * height)
+        for y in 0..<height {
+            let r = row(y)
+            for x in 0..<width { out[y * width + x] = r[x] }
+        }
+        return out
+    }
+
     func row(_ y: Int) -> UnsafePointer<Float> {
         UnsafePointer(buffer.contents().assumingMemoryBound(to: Float.self) + y * rowStride)
     }

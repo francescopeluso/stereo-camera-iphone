@@ -168,6 +168,7 @@ final class AppModel {
 
     @ObservationIgnored let pipeline: Pipeline
     @ObservationIgnored let renderer: Renderer
+    let capture = Capture()
     @ObservationIgnored private let camera = CameraController()
 
     var detectorName: String { pipeline.detector.name }
@@ -178,6 +179,7 @@ final class AppModel {
         pipeline = Pipeline(engine: engine)
         renderer = Renderer(device: device, store: pipeline.store)
         renderer.model = self
+        capture.model = self
 
         let p = pipeline
         camera.onStereo = { p.stereo($0, $1) }
@@ -219,6 +221,23 @@ final class AppModel {
         }
         tap = p
         tapDistance = sampleTap()
+    }
+
+    func metadata() -> [String: Any] {
+        [
+            "app": "StereoVision",
+            "date": ISO8601DateFormatter().string(from: .now),
+            "source": source.rawValue,
+            "mode": mode.title,
+            "matcher": source == .stereo ? matcher.rawValue : "n/a",
+            "max_disparity": maxDisparity,
+            "lr_check": lrCheck,
+            "p1": Int(p1), "p2": Int(p2),
+            "uniqueness": uniqueness,
+            "range_m": [minZ, maxZ],
+            "rectification": ["flip": flip, "dy_px": yOffset],
+            "detector": detectorName,
+        ]
     }
 
     func resetOrbit() {

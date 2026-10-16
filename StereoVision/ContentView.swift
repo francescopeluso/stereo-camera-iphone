@@ -88,6 +88,13 @@ struct HUD: View {
                 Text("\(model.source.title) · \(Int(model.depthSize.width))×\(Int(model.depthSize.height)) · f \(Int(model.K.fx)) px")
             }
             if model.calibrating { Text("Epipolar auto-calibration…").foregroundStyle(.yellow) }
+            if let start = model.capture.recordingStart {
+                TimelineView(.periodic(from: start, by: 1)) { ctx in
+                    let t = Int(ctx.date.timeIntervalSince(start))
+                    Text(String(format: "● REC %02d:%02d", t / 60, t % 60)).foregroundStyle(.red).bold()
+                }
+            }
+            if let m = model.capture.message { Text(m).foregroundStyle(.green) }
             if let s = model.status { Text(s).foregroundStyle(.red) }
         }
         .font(.caption.monospacedDigit())
@@ -128,6 +135,14 @@ struct SidePanel: View {
                 if model.source == .stereo {
                     button("wand.and.stars", "Calibrate", selected: model.calibrating) { model.calibrate() }
                 }
+                button("camera.aperture", "Photo", selected: false) { model.capture.takePhoto() }
+                Button { model.capture.toggleRecording() } label: {
+                    Image(systemName: model.capture.isRecording ? "stop.circle.fill" : "record.circle")
+                        .font(.system(size: 22, weight: .semibold))
+                        .frame(width: 50, height: 40)
+                        .foregroundStyle(.red)
+                }
+                .accessibilityLabel(model.capture.isRecording ? "Stop recording" : "Record video")
                 button("slider.horizontal.3", "Settings", selected: false) { showSettings = true }
             }
             .padding(.vertical, 10)

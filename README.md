@@ -17,6 +17,16 @@ The full stereo pipeline (rectification, matching, triangulation) is written fro
 - **Metric measurements** for every object: distance, lateral offset and approximate width × height in cm
 - **Tap to measure** any point; the crosshair always shows the distance at the center
 - **Three depth sources**: the custom stereo matcher (default), Apple's Dual-Wide depth, and LiDAR on iPhone Pro models (12 Pro and later). The LiDAR option only appears on phones that have the sensor. It measures distance directly with laser time-of-flight, so it works on textureless walls where stereo fails and reaches about 5 m. That makes it a good ground truth for evaluating the stereo matcher
+- **Photo and video capture** of exactly what's on screen (current view mode with masks, labels and distances), saved to Photos. Videos are HEVC 1280 px at 30 fps
+- **Raw data export** with every photo, for offline analysis (Python, OpenCV, MeshLab…), in *Files › On My iPhone › StereoVision*:
+
+  | File | Content |
+  |---|---|
+  | `view.png` | the composited view, as saved to Photos |
+  | `rgb.png` | the color image the depth refers to |
+  | `depth_mm.png` | 16-bit grayscale depth in millimeters (0 = invalid) |
+  | `cloud.ply` | colored point cloud in meters (x right, y down, z forward) |
+  | `meta.json` | intrinsics, baseline, depth source and settings, detected objects with distance and size |
 - **Automatic calibration** of the camera alignment at startup, with manual fine-tuning in Settings
 
 ## View modes

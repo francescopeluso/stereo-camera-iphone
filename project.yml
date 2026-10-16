@@ -38,6 +38,9 @@ targets:
         ENABLE_USER_SCRIPT_SANDBOXING: NO
         INFOPLIST_KEY_CFBundleDisplayName: StereoVision
         INFOPLIST_KEY_NSCameraUsageDescription: "StereoVision uses the wide and ultra-wide cameras to compute stereo depth."
+        INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription: "StereoVision saves photos and videos of the stereo view to your library."
+        INFOPLIST_KEY_UIFileSharingEnabled: YES
+        INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace: YES
         INFOPLIST_KEY_UISupportedInterfaceOrientations: UIInterfaceOrientationLandscapeRight
         INFOPLIST_KEY_UILaunchScreen_Generation: YES
         INFOPLIST_KEY_UIApplicationSceneManifest_Generation: YES

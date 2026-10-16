@@ -1,6 +1,11 @@
 import MetalKit
 import simd
 
+struct Unchecked<T>: @unchecked Sendable {
+    let value: T
+    init(_ v: T) { value = v }
+}
+
 struct DisplayParams {
     var mode: Int32
     var minZ: Float
@@ -30,6 +35,8 @@ final class Renderer: NSObject, MTKViewDelegate {
     private let depthOn: MTLDepthStencilState
     private let store: FrameStore
     private var labelTex: MTLTexture
+    private var depthTarget: MTLTexture?
+    private var cache: CVMetalTextureCache
 
     init(device: MTLDevice, store: FrameStore) {
         self.device = device
@@ -54,6 +61,9 @@ final class Renderer: NSObject, MTKViewDelegate {
         ds.isDepthWriteEnabled = true
         depthOn = device.makeDepthStencilState(descriptor: ds)!
         labelTex = Self.makeLabels(device, 1, 1)
+        var c: CVMetalTextureCache?
+        CVMetalTextureCacheCreate(nil, nil, device, nil, &c)
+        cache = c!
     }
 
     private static func makeLabels(_ device: MTLDevice, _ w: Int, _ h: Int) -> MTLTexture {
@@ -76,19 +86,36 @@ final class Renderer: NSObject, MTKViewDelegate {
 
     func draw(in view: MTKView) {
         guard let model, let frame = store.latest, let pass = view.currentRenderPassDescriptor, let drawable = view.currentDrawable,
-              let cb = queue.makeCommandBuffer(), let enc = cb.makeRenderCommandEncoder(descriptor: pass) else { return }
-
-        if model.mode == .pointCloud {
-            drawPoints(enc, frame, model, Float(view.drawableSize.width / max(1, view.drawableSize.height)))
-        } else {
-            let a = model.analysis
-            let hasLabels = a.gridW > 0 && a.labels.count == a.gridW * a.gridH
-            if hasLabels {
-                if labelTex.width != a.gridW || labelTex.height != a.gridH { labelTex = Self.makeLabels(device, a.gridW, a.gridH) }
-                a.labels.withUnsafeBytes {
-                    labelTex.replace(region: MTLRegionMake2D(0, 0, a.gridW, a.gridH), mipmapLevel: 0, withBytes: $0.baseAddress!, bytesPerRow: a.gridW)
+              let cb = queue.makeCommandBuffer() else { return }
+        let hasLabels = uploadLabels(model.analysis)
+        encode(cb, pass, frame, model, size: view.drawableSize, hasLabels: hasLabels)
+        if let (pb, done) = model.capture.target(), let (offscreen, cv) = offscreenPass(pb) {
+            encode(cb, offscreen, frame, model, size: CGSize(width: CVPixelBufferGetWidth(pb), height: CVPixelBufferGetHeight(pb)), hasLabels: hasLabels)
+            let held = Unchecked((pb, cv))
+            cb.addCompletedHandler { _ in
+                DispatchQueue.main.async {
+                    withExtendedLifetime(held.value.1) { done(held.value.0) }
                 }
             }
+        }
+        cb.present(drawable)
+        cb.commit()
+    }
+
+    private func uploadLabels(_ a: Analysis) -> Bool {
+        guard a.gridW > 0 && a.labels.count == a.gridW * a.gridH else { return false }
+        if labelTex.width != a.gridW || labelTex.height != a.gridH { labelTex = Self.makeLabels(device, a.gridW, a.gridH) }
+        a.labels.withUnsafeBytes {
+            labelTex.replace(region: MTLRegionMake2D(0, 0, a.gridW, a.gridH), mipmapLevel: 0, withBytes: $0.baseAddress!, bytesPerRow: a.gridW)
+        }
+        return true
+    }
+
+    private func encode(_ cb: MTLCommandBuffer, _ pass: MTLRenderPassDescriptor, _ frame: StereoFrame, _ model: AppModel, size: CGSize, hasLabels: Bool) {
+        guard let enc = cb.makeRenderCommandEncoder(descriptor: pass) else { return }
+        if model.mode == .pointCloud {
+            drawPoints(enc, frame, model, Float(size.width / max(1, size.height)), pointSize: Float(max(2, size.width / 550)))
+        } else {
             var p = DisplayParams(mode: model.mode.shaderIndex, minZ: model.minZ, maxZ: model.maxZ, alpha: model.overlayAlpha,
                                   hasRight: frame.right == nil ? 0 : 1, hasLabels: hasLabels ? 1 : 0)
             enc.setRenderPipelineState(display)
@@ -101,17 +128,39 @@ final class Renderer: NSObject, MTKViewDelegate {
             enc.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: 3)
         }
         enc.endEncoding()
-        cb.present(drawable)
-        cb.commit()
     }
 
-    private func drawPoints(_ enc: MTLRenderCommandEncoder, _ f: StereoFrame, _ m: AppModel, _ aspect: Float) {
+    private func offscreenPass(_ pb: CVPixelBuffer) -> (MTLRenderPassDescriptor, CVMetalTexture)? {
+        let w = CVPixelBufferGetWidth(pb), h = CVPixelBufferGetHeight(pb)
+        let attrs = [kCVMetalTextureUsage: MTLTextureUsage([.renderTarget, .shaderRead]).rawValue] as CFDictionary
+        var cv: CVMetalTexture?
+        CVMetalTextureCacheCreateTextureFromImage(nil, cache, pb, attrs, .bgra8Unorm, w, h, 0, &cv)
+        guard let cv, let tex = CVMetalTextureGetTexture(cv) else { return nil }
+        if depthTarget?.width != w || depthTarget?.height != h {
+            let d = MTLTextureDescriptor.texture2DDescriptor(pixelFormat: .depth32Float, width: w, height: h, mipmapped: false)
+            d.usage = .renderTarget
+            d.storageMode = .private
+            depthTarget = device.makeTexture(descriptor: d)
+        }
+        let p = MTLRenderPassDescriptor()
+        p.colorAttachments[0].texture = tex
+        p.colorAttachments[0].loadAction = .clear
+        p.colorAttachments[0].clearColor = MTLClearColor(red: 0, green: 0, blue: 0, alpha: 1)
+        p.colorAttachments[0].storeAction = .store
+        p.depthAttachment.texture = depthTarget
+        p.depthAttachment.loadAction = .clear
+        p.depthAttachment.clearDepth = 1
+        p.depthAttachment.storeAction = .dontCare
+        return (p, cv)
+    }
+
+    private func drawPoints(_ enc: MTLRenderCommandEncoder, _ f: StereoFrame, _ m: AppModel, _ aspect: Float, pointSize: Float) {
         let step = max(1, f.width / 320)
         let fovy = 2 * atan(Float(f.height) / 2 / f.K.fy)
         let pivot: Float = 1.2
         let view = translate(0, 0, -m.orbit) * rotateX(m.pitch) * rotateY(m.yaw) * translate(0, 0, pivot)
         var p = PCParams(mvp: perspective(fovy: fovy, aspect: aspect, near: 0.02, far: 50) * view,
-                         fx: f.K.fx, fy: f.K.fy, cx: f.K.cx, cy: f.K.cy, minZ: m.minZ, maxZ: m.maxZ, pointSize: 4,
+                         fx: f.K.fx, fy: f.K.fy, cx: f.K.cx, cy: f.K.cy, minZ: m.minZ, maxZ: m.maxZ, pointSize: pointSize,
                          w: UInt32(f.width), h: UInt32(f.height), step: UInt32(step))
         enc.setRenderPipelineState(points)
         enc.setDepthStencilState(depthOn)
