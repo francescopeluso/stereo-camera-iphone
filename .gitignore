@@ -1,0 +1,12 @@
+build/
+DerivedData/
+xcuserdata/
+*.xcuserstate
+.DS_Store
+Config/Local.xcconfig
+StereoVision/Models/*.mlpackage
+*.pt
+.build/
+.swiftpm/
+*.ipa
+*.dSYM.zip

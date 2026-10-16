@@ -1,0 +1,390 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0A8885C208F8AF47A1DEF51B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DD47C900CDA69F349F2E7F05 /* Assets.xcassets */; };
+		25121C3183A3A939B562FD37 /* StereoEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FBEB6373DDF5AFD89798702 /* StereoEngine.swift */; };
+		303596F04684BEEC1FD9B97E /* OverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DA425104A6DE48AF50AE289 /* OverlayView.swift */; };
+		3C6B87A0F806359E573EF930 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF78EAB8BCDBF65A25A5D815 /* ContentView.swift */; };
+		4A938EB4B82503C00D57E3D0 /* AppModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56DA7BD05E72209317257A2 /* AppModel.swift */; };
+		7021D3F748CDFD42D14E7E53 /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 6E909856B28ECAC981F8F9C1 /* Shaders.metal */; };
+		A49497550BC6E9443FB9B8E1 /* Detector.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9BBCF19E1F51DA8A81E2D8E /* Detector.swift */; };
+		C00FAEBD9221E735877A6B2B /* Analyzer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3184CAD436EB2D31EDFD80E /* Analyzer.swift */; };
+		CD63C1D3316EB9A56D11FB12 /* CameraController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3911430056B77D868328295 /* CameraController.swift */; };
+		DFDE90D557B69AC5674000A7 /* Renderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C866D86415300FAB186B5D /* Renderer.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		2DA425104A6DE48AF50AE289 /* OverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverlayView.swift; sourceTree = "<group>"; };
+		6E909856B28ECAC981F8F9C1 /* Shaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
+		9FBEB6373DDF5AFD89798702 /* StereoEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StereoEngine.swift; sourceTree = "<group>"; };
+		A9BBCF19E1F51DA8A81E2D8E /* Detector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Detector.swift; sourceTree = "<group>"; };
+		AF78EAB8BCDBF65A25A5D815 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		BF3515D6B6BAC0E6EBA32614 /* Base.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Base.xcconfig; sourceTree = "<group>"; };
+		D3184CAD436EB2D31EDFD80E /* Analyzer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Analyzer.swift; sourceTree = "<group>"; };
+		D8C866D86415300FAB186B5D /* Renderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Renderer.swift; sourceTree = "<group>"; };
+		DD47C900CDA69F349F2E7F05 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		E452188214A86CFB4834B483 /* StereoVision.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = StereoVision.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E56DA7BD05E72209317257A2 /* AppModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppModel.swift; sourceTree = "<group>"; };
+		F3911430056B77D868328295 /* CameraController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraController.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		05D287F19F714018EE24FA6D /* StereoVision */ = {
+			isa = PBXGroup;
+			children = (
+				D3184CAD436EB2D31EDFD80E /* Analyzer.swift */,
+				E56DA7BD05E72209317257A2 /* AppModel.swift */,
+				DD47C900CDA69F349F2E7F05 /* Assets.xcassets */,
+				F3911430056B77D868328295 /* CameraController.swift */,
+				AF78EAB8BCDBF65A25A5D815 /* ContentView.swift */,
+				A9BBCF19E1F51DA8A81E2D8E /* Detector.swift */,
+				2DA425104A6DE48AF50AE289 /* OverlayView.swift */,
+				D8C866D86415300FAB186B5D /* Renderer.swift */,
+				6E909856B28ECAC981F8F9C1 /* Shaders.metal */,
+				9FBEB6373DDF5AFD89798702 /* StereoEngine.swift */,
+			);
+			path = StereoVision;
+			sourceTree = "<group>";
+		};
+		0BEC2C27F5161176C7C5FB9B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E452188214A86CFB4834B483 /* StereoVision.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		993F8FAE77C89DE91491D65C = {
+			isa = PBXGroup;
+			children = (
+				AE69FD9BB0204AB135F044F8 /* Config */,
+				05D287F19F714018EE24FA6D /* StereoVision */,
+				0BEC2C27F5161176C7C5FB9B /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		AE69FD9BB0204AB135F044F8 /* Config */ = {
+			isa = PBXGroup;
+			children = (
+				BF3515D6B6BAC0E6EBA32614 /* Base.xcconfig */,
+			);
+			path = Config;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		52AD97AA9917BACDB695825E /* StereoVision */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CDDD9B713AF75444BF35DEC2 /* Build configuration list for PBXNativeTarget "StereoVision" */;
+			buildPhases = (
+				5AA7DE10E3D1E70A9B6EAAEF /* Compile YOLO models */,
+				1A6D2965C037B38A159E3D4D /* Sources */,
+				3D19F3DDE1BE765248F94D4E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = StereoVision;
+			packageProductDependencies = (
+			);
+			productName = StereoVision;
+			productReference = E452188214A86CFB4834B483 /* StereoVision.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		17DE42EAF4A5F19F0BA5FAE6 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+					52AD97AA9917BACDB695825E = {
+						DevelopmentTeam = "";
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 58F06A3FC6FBC6BF034EB2E9 /* Build configuration list for PBXProject "StereoVision" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = 993F8FAE77C89DE91491D65C;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 0BEC2C27F5161176C7C5FB9B /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				52AD97AA9917BACDB695825E /* StereoVision */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		3D19F3DDE1BE765248F94D4E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0A8885C208F8AF47A1DEF51B /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		5AA7DE10E3D1E70A9B6EAAEF /* Compile YOLO models */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Compile YOLO models";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "set -- \"$SRCROOT\"/StereoVision/Models/*.mlpackage\nif [ ! -d \"$1\" ]; then\n  echo \"warning: no model in StereoVision/Models, falling back to Vision built-in detection. Run scripts/export_yolo.sh\"\n  exit 0\nfi\nfor M in \"$@\"; do\n  xcrun coremlcompiler compile \"$M\" \"$TARGET_BUILD_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH\" > /dev/null\ndone\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		1A6D2965C037B38A159E3D4D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C00FAEBD9221E735877A6B2B /* Analyzer.swift in Sources */,
+				4A938EB4B82503C00D57E3D0 /* AppModel.swift in Sources */,
+				CD63C1D3316EB9A56D11FB12 /* CameraController.swift in Sources */,
+				3C6B87A0F806359E573EF930 /* ContentView.swift in Sources */,
+				A49497550BC6E9443FB9B8E1 /* Detector.swift in Sources */,
+				303596F04684BEEC1FD9B97E /* OverlayView.swift in Sources */,
+				DFDE90D557B69AC5674000A7 /* Renderer.swift in Sources */,
+				7021D3F748CDFD42D14E7E53 /* Shaders.metal in Sources */,
+				25121C3183A3A939B562FD37 /* StereoEngine.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		45113F95EB92AB61FF574CA4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		740306879561CFE35F24D2F0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = BF3515D6B6BAC0E6EBA32614 /* Base.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = StereoVision;
+				INFOPLIST_KEY_NSCameraUsageDescription = "StereoVision uses the wide and ultra-wide cameras to compute stereo depth.";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UIRequiresFullScreen = YES;
+				INFOPLIST_KEY_UIStatusBarHidden = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationLandscapeRight;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		870778681D780462AD9F0BE8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = BF3515D6B6BAC0E6EBA32614 /* Base.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = StereoVision;
+				INFOPLIST_KEY_NSCameraUsageDescription = "StereoVision uses the wide and ultra-wide cameras to compute stereo depth.";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UIRequiresFullScreen = YES;
+				INFOPLIST_KEY_UIStatusBarHidden = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationLandscapeRight;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+		FA69DE6EB9C1642FBBF32EFD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		58F06A3FC6FBC6BF034EB2E9 /* Build configuration list for PBXProject "StereoVision" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FA69DE6EB9C1642FBBF32EFD /* Debug */,
+				45113F95EB92AB61FF574CA4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		CDDD9B713AF75444BF35DEC2 /* Build configuration list for PBXNativeTarget "StereoVision" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				740306879561CFE35F24D2F0 /* Debug */,
+				870778681D780462AD9F0BE8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 17DE42EAF4A5F19F0BA5FAE6 /* Project object */;
+}

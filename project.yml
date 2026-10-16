@@ -1,0 +1,46 @@
+name: StereoVision
+options:
+  bundleIdPrefix: com.example
+  deploymentTarget:
+    iOS: "18.0"
+targets:
+  StereoVision:
+    type: application
+    platform: iOS
+    configFiles:
+      Debug: Config/Base.xcconfig
+      Release: Config/Base.xcconfig
+    sources:
+      - path: StereoVision
+        excludes:
+          - "Models/**"
+    preBuildScripts:
+      - name: Compile YOLO models
+        basedOnDependencyAnalysis: false
+        script: |
+          set -- "$SRCROOT"/StereoVision/Models/*.mlpackage
+          if [ ! -d "$1" ]; then
+            echo "warning: no model in StereoVision/Models, falling back to Vision built-in detection. Run scripts/export_yolo.sh"
+            exit 0
+          fi
+          for M in "$@"; do
+            xcrun coremlcompiler compile "$M" "$TARGET_BUILD_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH" > /dev/null
+          done
+    settings:
+      base:
+        CODE_SIGN_STYLE: Automatic
+        SWIFT_VERSION: "5.0"
+        TARGETED_DEVICE_FAMILY: "1"
+        GENERATE_INFOPLIST_FILE: YES
+        MARKETING_VERSION: "1.0"
+        CURRENT_PROJECT_VERSION: "1"
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        ENABLE_USER_SCRIPT_SANDBOXING: NO
+        INFOPLIST_KEY_CFBundleDisplayName: StereoVision
+        INFOPLIST_KEY_NSCameraUsageDescription: "StereoVision uses the wide and ultra-wide cameras to compute stereo depth."
+        INFOPLIST_KEY_UISupportedInterfaceOrientations: UIInterfaceOrientationLandscapeRight
+        INFOPLIST_KEY_UILaunchScreen_Generation: YES
+        INFOPLIST_KEY_UIApplicationSceneManifest_Generation: YES
+        INFOPLIST_KEY_UIStatusBarHidden: YES
+        INFOPLIST_KEY_UIRequiresFullScreen: YES
+        MTL_FAST_MATH: YES
