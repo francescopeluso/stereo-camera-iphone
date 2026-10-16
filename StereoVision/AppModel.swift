@@ -111,9 +111,9 @@ final class Pipeline: @unchecked Sendable {
         finish(f, s, cal)
     }
 
-    func apple(_ video: CMSampleBuffer, _ depth: AVDepthData) {
+    func depthData(_ video: CMSampleBuffer, _ depth: AVDepthData) {
         let s = settings.withLock { $0 }
-        guard let f = engine.apple(video, depth, s) else { return }
+        guard let f = engine.depthData(video, depth, s) else { return }
         finish(f, s, nil)
     }
 
@@ -181,7 +181,7 @@ final class AppModel {
 
         let p = pipeline
         camera.onStereo = { p.stereo($0, $1) }
-        camera.onDepth = { p.apple($0, $1) }
+        camera.onDepth = { p.depthData($0, $1) }
         camera.onDevices = { engine.configure(wide: $0, ultra: $1) }
         camera.onError = { [weak self] msg in DispatchQueue.main.async { self?.status = msg } }
         pipeline.publish = { [weak self] r in DispatchQueue.main.async { self?.apply(r) } }
@@ -199,7 +199,7 @@ final class AppModel {
     func setSource(_ s: DepthSource) {
         source = s
         status = nil
-        if s == .apple && mode.needsStereoPair { mode = .standard }
+        if s != .stereo && mode.needsStereoPair { mode = .standard }
         pipeline.store.latest = nil
         analysis = Analysis()
         if s == .stereo { calibrate() }

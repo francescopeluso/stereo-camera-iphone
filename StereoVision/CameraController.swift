@@ -1,10 +1,26 @@
 import AVFoundation
 
 enum DepthSource: String, CaseIterable, Identifiable {
-    case stereo, apple
+    case stereo, apple, lidar
     var id: Self { self }
-    var title: String { self == .stereo ? "Stereo custom (Census + WTA)" : "Apple Dual-Wide depth" }
-    var short: String { self == .stereo ? "STEREO" : "APPLE" }
+
+    var title: String {
+        switch self {
+        case .stereo: "Custom stereo (Census + SGM)"
+        case .apple: "Apple Dual-Wide depth"
+        case .lidar: "LiDAR depth"
+        }
+    }
+
+    var short: String { rawValue.uppercased() }
+
+    var deviceType: AVCaptureDevice.DeviceType {
+        self == .lidar ? .builtInLiDARDepthCamera : .builtInDualWideCamera
+    }
+
+    static let available: [DepthSource] = allCases.filter {
+        AVCaptureDevice.default($0.deviceType, for: .video, position: .back) != nil
+    }
 }
 
 final class CameraController: NSObject, AVCaptureDataOutputSynchronizerDelegate, @unchecked Sendable {
@@ -31,7 +47,7 @@ final class CameraController: NSObject, AVCaptureDataOutputSynchronizerDelegate,
             session = nil
             sync = nil
             do {
-                let s = try source == .stereo ? makeStereo() : makeDepth()
+                let s = try source == .stereo ? makeStereo() : makeDepth(source.deviceType)
                 session = s
                 s.startRunning()
             } catch {
@@ -44,9 +60,9 @@ final class CameraController: NSObject, AVCaptureDataOutputSynchronizerDelegate,
         sessionQueue.async { [self] in session?.stopRunning() }
     }
 
-    private func dualWide() throws -> AVCaptureDevice {
-        guard let d = AVCaptureDevice.default(.builtInDualWideCamera, for: .video, position: .back) else {
-            throw Failure("Dual-Wide camera not available")
+    private func device(_ type: AVCaptureDevice.DeviceType) throws -> AVCaptureDevice {
+        guard let d = AVCaptureDevice.default(type, for: .video, position: .back) else {
+            throw Failure("\(type.rawValue) not available")
         }
         return d
     }
@@ -62,7 +78,7 @@ final class CameraController: NSObject, AVCaptureDataOutputSynchronizerDelegate,
 
     private func makeStereo() throws -> AVCaptureSession {
         guard AVCaptureMultiCamSession.isMultiCamSupported else { throw Failure("Multi-cam not supported") }
-        let dev = try dualWide()
+        let dev = try device(.builtInDualWideCamera)
         guard let wide = dev.constituentDevices.first(where: { $0.deviceType == .builtInWideAngleCamera }),
               let ultra = dev.constituentDevices.first(where: { $0.deviceType == .builtInUltraWideCamera }) else {
             throw Failure("Constituent cameras not found")
@@ -116,8 +132,8 @@ final class CameraController: NSObject, AVCaptureDataOutputSynchronizerDelegate,
         return session
     }
 
-    private func makeDepth() throws -> AVCaptureSession {
-        let dev = try dualWide()
+    private func makeDepth(_ type: AVCaptureDevice.DeviceType) throws -> AVCaptureSession {
+        let dev = try device(type)
         let session = AVCaptureSession()
         session.beginConfiguration()
         defer { session.commitConfiguration() }
@@ -140,7 +156,7 @@ final class CameraController: NSObject, AVCaptureDataOutputSynchronizerDelegate,
         let candidates = dev.formats.filter { !$0.supportedDepthDataFormats.isEmpty }
         let preferred = candidates.filter(is169).isEmpty ? candidates : candidates.filter(is169)
         guard let format = preferred.min(by: { abs(dims($0).width - 1920) < abs(dims($1).width - 1920) }) else {
-            throw Failure("No Dual-Wide format with depth")
+            throw Failure("No depth-capable format on \(type.rawValue)")
         }
         let depthFormat = format.supportedDepthDataFormats
             .filter {

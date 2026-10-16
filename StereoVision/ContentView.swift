@@ -85,7 +85,7 @@ struct HUD: View {
                 Text(String(format: "B %.1f mm · f %.0f px · Δy %.2f px%@", model.baselineMM, model.K.fx, model.yOffset, model.flip ? " · ⇄" : ""))
                 Text(model.matcher == .sgm ? "SGM-4 · D \(model.maxDisparity)" + (model.lrCheck ? " · LR" : "") : "Block 5×5 · D \(model.maxDisparity)")
             } else {
-                Text("Depth \(Int(model.depthSize.width))×\(Int(model.depthSize.height)) · f \(Int(model.K.fx)) px")
+                Text("\(model.source.title) · \(Int(model.depthSize.width))×\(Int(model.depthSize.height)) · f \(Int(model.K.fx)) px")
             }
             if model.calibrating { Text("Epipolar auto-calibration…").foregroundStyle(.yellow) }
             if let s = model.status { Text(s).foregroundStyle(.red) }
@@ -106,19 +106,20 @@ struct SidePanel: View {
         ScrollView(showsIndicators: false) {
             VStack(spacing: 6) {
                 ForEach(ViewMode.allCases) { m in
-                    let disabled = model.source == .apple && m.needsStereoPair
+                    let disabled = model.source != .stereo && m.needsStereoPair
                     button(m.icon, m.title, selected: model.mode == m) { model.mode = m }
                         .disabled(disabled)
                         .opacity(disabled ? 0.3 : 1)
                 }
                 Divider().background(.white.opacity(0.3)).padding(.vertical, 4)
                 Button {
-                    model.setSource(model.source == .stereo ? .apple : .stereo)
+                    let all = DepthSource.available
+                    model.setSource(all[((all.firstIndex(of: model.source) ?? 0) + 1) % all.count])
                 } label: {
                     Text(model.source.short)
                         .font(.system(size: 10, weight: .heavy, design: .monospaced))
                         .frame(width: 50, height: 32)
-                        .background(model.source == .stereo ? Color.orange : Color.blue, in: RoundedRectangle(cornerRadius: 8))
+                        .background(model.source == .stereo ? Color.orange : model.source == .lidar ? Color.green : Color.blue, in: RoundedRectangle(cornerRadius: 8))
                         .foregroundStyle(.white)
                 }
                 button(model.detection ? "viewfinder" : "viewfinder.trianglebadge.exclamationmark", "Detection", selected: model.detection) {
@@ -186,7 +187,7 @@ struct SettingsView: View {
                 }
                 Section("Source") {
                     Picker("Depth", selection: Binding(get: { model.source }, set: { model.setSource($0) })) {
-                        ForEach(DepthSource.allCases) { Text($0.title).tag($0) }
+                        ForEach(DepthSource.available) { Text($0.title).tag($0) }
                     }
                     LabeledContent("Baseline", value: String(format: "%.2f mm", model.baselineMM))
                     LabeledContent("Focal length", value: String(format: "%.1f px", model.K.fx))

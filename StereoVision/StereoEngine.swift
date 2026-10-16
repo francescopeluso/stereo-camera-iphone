@@ -338,7 +338,7 @@ final class StereoEngine: @unchecked Sendable {
         return (best.flip, best.dy)
     }
 
-    func apple(_ video: CMSampleBuffer, _ depthData: AVDepthData, _ s: PipelineSettings) -> StereoFrame? {
+    func depthData(_ video: CMSampleBuffer, _ depthData: AVDepthData, _ s: PipelineSettings) -> StereoFrame? {
         guard let pb = CMSampleBufferGetImageBuffer(video), let (tex, cv) = texture(pb) else { return nil }
         let data = depthData.depthDataType == kCVPixelFormatType_DepthFloat32 ? depthData : depthData.converting(toDepthDataType: kCVPixelFormatType_DepthFloat32)
         let map = data.depthDataMap

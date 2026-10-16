@@ -4,11 +4,11 @@
 
 StereoVision turns the two rear cameras of an iPhone (wide + ultra-wide) into a real-time **stereo camera**. It measures how far things are, recognizes and outlines objects (80 everyday classes: people, chairs, bottles, laptops…), and shows the scene in 9 different ways, from a classic depth map to a navigable 3D point cloud.
 
-> **Tested only on iPhone 16.** Other iPhones with wide + ultra-wide rear cameras should work, but camera formats, calibration and performance may differ.
+> **Tested only on iPhone 16.** Other iPhones with wide + ultra-wide rear cameras should work, but camera formats, calibration and performance may differ. The LiDAR source has never been run on a real device.
 
 This is a personal study project, not tied to any course assignment or exam. I built it to get a hands-on understanding of concepts covered in my Artificial Vision lectures: epipolar geometry, rectification, stereo matching, triangulation and object detection. Seeing them run live on a phone made them much easier to grasp.
 
-The full stereo pipeline (rectification, matching, triangulation) is written from scratch and runs on the GPU. You can switch to Apple's own depth at any time to compare the two.
+The full stereo pipeline (rectification, matching, triangulation) is written from scratch and runs on the GPU. You can switch to Apple's own depth, or to the LiDAR scanner on Pro models, at any time to compare them.
 
 ## What it does
 
@@ -16,7 +16,7 @@ The full stereo pipeline (rectification, matching, triangulation) is written fro
 - **Object detection and segmentation** with YOLO11n-seg: each object gets a label, a confidence score, a colored mask and an ID that follows it from frame to frame
 - **Metric measurements** for every object: distance, lateral offset and approximate width × height in cm
 - **Tap to measure** any point; the crosshair always shows the distance at the center
-- **Two depth sources**: the custom stereo matcher (default) or Apple's Dual-Wide depth as a reference
+- **Three depth sources**: the custom stereo matcher (default), Apple's Dual-Wide depth, and LiDAR on iPhone Pro models (12 Pro and later). The LiDAR option only appears on phones that have the sensor. It measures distance directly with laser time-of-flight, so it works on textureless walls where stereo fails and reaches about 5 m. That makes it a good ground truth for evaluating the stereo matcher
 - **Automatic calibration** of the camera alignment at startup, with manual fine-tuning in Settings
 
 ## View modes
