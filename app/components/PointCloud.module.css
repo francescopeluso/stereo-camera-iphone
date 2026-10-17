@@ -1,0 +1,59 @@
+.wrap {
+  position: relative;
+  margin: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  cursor: grab;
+  touch-action: pan-y;
+}
+
+.canvas:active {
+  cursor: grabbing;
+}
+
+.fallback {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.85;
+}
+
+.caption {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 0.5rem 1rem;
+  max-width: 34rem;
+  color: var(--on-dark-muted);
+  font-size: var(--step--1);
+  line-height: 1.4;
+  text-align: right;
+}
+
+.toggle {
+  font: inherit;
+  color: var(--on-dark);
+  background: transparent;
+  border: 1px solid #3a4468;
+  border-radius: 999px;
+  padding: 0.35rem 0.85rem;
+  cursor: pointer;
+}
+
+.toggle:hover {
+  border-color: var(--on-dark-muted);
+}
+
+.toggle[aria-pressed="true"] {
+  background: var(--ink-soft);
+}

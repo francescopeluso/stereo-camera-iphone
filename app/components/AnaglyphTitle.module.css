@@ -1,0 +1,39 @@
+.title {
+  --d: 0.045em;
+  position: relative;
+  max-width: 12ch;
+  font-size: var(--step-4);
+  font-weight: 800;
+  line-height: 0.95;
+  letter-spacing: -0.035em;
+  isolation: isolate;
+}
+
+.left,
+.right {
+  display: block;
+  transition: transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.left {
+  color: var(--left);
+  transform: translateX(calc(var(--d) * -0.5));
+}
+
+.right {
+  position: absolute;
+  inset: 0;
+  color: var(--right-bright);
+  mix-blend-mode: screen;
+  transform: translateX(calc(var(--d) * 0.5));
+}
+
+@media (forced-colors: active) {
+  .right {
+    display: none;
+  }
+  .left {
+    color: CanvasText;
+    transform: none;
+  }
+}
