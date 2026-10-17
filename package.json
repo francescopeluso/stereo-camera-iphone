@@ -9,6 +9,7 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@vercel/analytics": "^2.0.1",
     "katex": "^0.16.22",
     "lucide-react": "^1.59.0",
     "next": "16.4.2",
